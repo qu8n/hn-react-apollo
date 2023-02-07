@@ -1,3 +1,6 @@
+# `feed` retrieves all links from the backend; 
+# also allows for filter, sorting, and pagination args.
+# Certain syntax are Prisma-specific (e.g. skip, take)
 type Query {
   info: String!
   feed(
@@ -14,17 +17,20 @@ type Feed {
   count: Int!
 }
 
+# Allows sign-ups & authenticated users to create new links,
+# login, and upvote a post
 type Mutation {
-  post(url: String!, description: String!): Link!
   signup(
     email: String!
     password: String!
     name: String!
   ): AuthPayload
+  post(url: String!, description: String!): Link!
   login(email: String!, password: String!): AuthPayload
   vote(linkId: ID!): Vote
 }
 
+# Allows realtime updates upon a new link/upvote
 type Subscription {
   newLink: Link
   newVote: Vote
