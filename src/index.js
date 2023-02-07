@@ -2,16 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import App from './components/App';
-import reportWebVitals from './reportWebVitals';
+import {
+  ApolloProvider, 
+  ApolloClient,
+  createHttpLink,
+  InMemoryCache
+} from '@apollo/client';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+// Configure our ApolloClient instance to know the endpoint of our GraphQL API 
+// so it can deal with the network connections.
+
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4000' // location of our GraphQL API
+});
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache() // store data from earlier requests for improved perf
+});
+
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <App/>
+  </ApolloProvider>,
+  document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
