@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './styles/index.css';
 import App from './components/App';
 import {
-  ApolloProvider, 
+  ApolloProvider,
   ApolloClient,
   createHttpLink,
   InMemoryCache
